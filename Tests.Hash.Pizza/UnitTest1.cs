@@ -9,7 +9,7 @@ namespace Tests.Hash.Pizza
         [TestMethod]
         public void TestMethod1()
         {
-            ISlice
+           
 
         }
     }

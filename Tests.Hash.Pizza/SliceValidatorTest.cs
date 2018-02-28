@@ -10,8 +10,7 @@ namespace Tests.Hash.Pizza
         [Fact]
         public void TestSliceValidatorVOne()
         {
-            ISliceValidator 
-
+         
         }
     }
 }
