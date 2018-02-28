@@ -1,0 +1,16 @@
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\bin\Debug\netcoreapp2.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\bin\Debug\netcoreapp2.0\xunit.runner.reporters.netcoreapp10.dll
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\bin\Debug\netcoreapp2.0\xunit.runner.utility.netcoreapp10.dll
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\bin\Debug\netcoreapp2.0\XTests.Hash.Pizza.deps.json
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\bin\Debug\netcoreapp2.0\XTests.Hash.Pizza.runtimeconfig.json
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\bin\Debug\netcoreapp2.0\XTests.Hash.Pizza.runtimeconfig.dev.json
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\bin\Debug\netcoreapp2.0\XTests.Hash.Pizza.dll
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\bin\Debug\netcoreapp2.0\Hash.Pizza.dll
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\bin\Debug\netcoreapp2.0\Hash.Pizza.pdb
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\obj\Debug\netcoreapp2.0\XTests.Hash.Pizza.csprojResolveAssemblyReference.cache
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\obj\Debug\netcoreapp2.0\XTests.Hash.Pizza.csproj.CoreCompileInputs.cache
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\obj\Debug\netcoreapp2.0\XTests.Hash.Pizza.AssemblyInfoInputs.cache
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\obj\Debug\netcoreapp2.0\XTests.Hash.Pizza.AssemblyInfo.cs
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\bin\Debug\netcoreapp2.0\XTests.Hash.Pizza.pdb
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\obj\Debug\netcoreapp2.0\XTests.Hash.Pizza.dll
+C:\Users\nielst\Documents\GHC2018_C-ka\XTests.Hash.Pizza\obj\Debug\netcoreapp2.0\XTests.Hash.Pizza.pdb
