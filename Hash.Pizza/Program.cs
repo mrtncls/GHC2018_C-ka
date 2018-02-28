@@ -10,6 +10,7 @@ namespace Hash.Pizza
         {
             var scanner = new PizzaScanner(args[0]);
             scanner.Scan();
+            scanner.WriteResult();
             Console.ReadLine();
         }
     }
@@ -24,6 +25,9 @@ namespace Hash.Pizza
         private int ColsMax { get; set; }
         private int LowestAmount { get; set; }
         private int HighestAmount { get; set; }
+
+        // Result
+        private int[,] Slices { get; set; }
 
         public PizzaScanner(string input)
         {
@@ -52,7 +56,16 @@ namespace Hash.Pizza
 
         public void Scan()
         {
+            Slices = new[,] { {0,0,2,1}, {0,2,2,2}, {0,3,2,4} };
+        }
 
+        public void WriteResult()
+        {
+            var output = Slices.Length + Environment.NewLine;
+            for (var i = 0; i < Slices.Length / 4; i++)
+                output += $"{Slices[i,0]} {Slices[i,1]} {Slices[i,2]} {Slices[i,3]} {Environment.NewLine}";
+            Console.Write($"Result:{Environment.NewLine}{output}");
+            File.WriteAllText("output.txt", output);
         }
     }
 }
