@@ -7,7 +7,7 @@ namespace Hash.Pizza.SliceValidator
     public interface ISliceValidator
     {
 
-        bool SliceIsValid(char[,] slice, int lowestAmount, int highestAmount, int diffrentIndregients);
+        bool SliceIsValid(char[,] pizza, int xStart, int xEnd, int yStart, int yEnd, int lowestAmount, int highestAmount, int diffrentIndregients);
 
     }
 }
