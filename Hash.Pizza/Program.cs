@@ -17,7 +17,7 @@ namespace Hash.Pizza
     public class PizzaScanner
     {
         // Dataset
-        private char[][] Pizza { get; set; }
+        private char[,] Pizza { get; set; }
 
         // Configuration
         private int RowsMax { get; set; }
@@ -41,12 +41,13 @@ namespace Hash.Pizza
             HighestAmount = int.Parse(confRow[3]);
             Console.WriteLine($"R: {RowsMax} C: {ColsMax} L: {LowestAmount} H: {HighestAmount}");
 
-            const int counter = 0;
-            foreach (var line in lines.Skip(1))
-            {
-                var ingredients = line.ToCharArray();
-                Pizza[counter] = ingredients;
-            }
+            lines = lines.Skip(1).ToArray();
+
+            Pizza = new char[RowsMax, ColsMax];
+
+            for (var l = 0; l < lines.Length; l++)
+                for (var c = 0; c < lines[l].Length; c++)
+                    Pizza[l, c] = lines[l][c];
         }
 
         public void Scan()
