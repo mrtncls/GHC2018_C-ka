@@ -8,9 +8,7 @@ namespace Hash.Pizza
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-
-            var scanner = new PizzaScanner();
+            var scanner = new PizzaScanner(args[0]);
             scanner.Scan();
             Console.ReadLine();
         }
