@@ -10,7 +10,25 @@ namespace Hash.Pizza.SliceValidator
         {
             if (slice.GetLength(0) * slice.GetLength(1) > highestAmount) return false;
 
-            return true;
+            var uniqueIngredients = new List<char>();
+
+            for (int k = 0; k < slice.GetLength(0); k++)
+            {
+                for (int l = 0; l < slice.GetLength(1); l++)
+                {
+                    var val = slice[k, l];
+
+                    if(!uniqueIngredients.Contains(val)) 
+                        uniqueIngredients.Add(val);
+
+                    if (uniqueIngredients.Count >= diffrentIndregients)
+                        return true;
+                }
+            }
+            
+                
+
+            return false;
         }
     }
 }
