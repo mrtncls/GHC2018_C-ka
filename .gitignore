@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs/Hash.Pizza/v15
+/Hash.Pizza/bin/Debug/netcoreapp2.0/Hash.Pizza.deps.json
+/Hash.Pizza/bin/Debug/netcoreapp2.0
+/Hash.Pizza/obj
+/Hash.Pizza.sln.DotSettings.user
