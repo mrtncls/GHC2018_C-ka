@@ -5893,11 +5893,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\nielst\\Documents\\GHC2018_C-ka\\XTests.Hash.Pizza\\XTests.Hash.Pizza.csproj",
+      "projectUniqueName": "C:\\Users\\nielst\\Documents\\GHC2018_C-ka\\PizzaProblem\\XTests.Hash.Pizza\\XTests.Hash.Pizza.csproj",
       "projectName": "XTests.Hash.Pizza",
-      "projectPath": "C:\\Users\\nielst\\Documents\\GHC2018_C-ka\\XTests.Hash.Pizza\\XTests.Hash.Pizza.csproj",
+      "projectPath": "C:\\Users\\nielst\\Documents\\GHC2018_C-ka\\PizzaProblem\\XTests.Hash.Pizza\\XTests.Hash.Pizza.csproj",
       "packagesPath": "C:\\Users\\nielst\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nielst\\Documents\\GHC2018_C-ka\\XTests.Hash.Pizza\\obj\\",
+      "outputPath": "C:\\Users\\nielst\\Documents\\GHC2018_C-ka\\PizzaProblem\\XTests.Hash.Pizza\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -5916,8 +5916,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\nielst\\Documents\\GHC2018_C-ka\\Hash.Pizza\\Hash.Pizza.csproj": {
-              "projectPath": "C:\\Users\\nielst\\Documents\\GHC2018_C-ka\\Hash.Pizza\\Hash.Pizza.csproj"
+            "C:\\Users\\nielst\\Documents\\GHC2018_C-ka\\PizzaProblem\\Hash.Pizza\\Hash.Pizza.csproj": {
+              "projectPath": "C:\\Users\\nielst\\Documents\\GHC2018_C-ka\\PizzaProblem\\Hash.Pizza\\Hash.Pizza.csproj"
             }
           }
         }

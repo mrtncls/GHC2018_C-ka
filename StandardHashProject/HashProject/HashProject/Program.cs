@@ -42,7 +42,7 @@ namespace HashProject
 
         private static void WriteResult(string output, string fileName)
         {
-            File.WriteAllText($"Output\\{fileName}.txt", output);
+            File.WriteAllText($"Output\\{fileName}.out", output);
             Console.WriteLine($"Done with: \t {fileName}");
         }
 
