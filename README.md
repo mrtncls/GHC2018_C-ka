@@ -1,2 +1,4 @@
-# GHC2018_C-ka
-Google hash code 2018 C#ka
+# Google Hash Code 2018 C#ka
+
+## Pizza problem
+Scored 809,822 
