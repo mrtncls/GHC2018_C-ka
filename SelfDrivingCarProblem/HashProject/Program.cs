@@ -9,11 +9,7 @@ namespace HashProject
     {
         static void Main(string[] args)
         {
-            var inputFiles = new List<string>();
-            inputFiles.Add($"{Environment.CurrentDirectory}\\Input\\example.in");
-            inputFiles.Add($"{Environment.CurrentDirectory}\\Input\\small.in");
-            inputFiles.Add($"{Environment.CurrentDirectory}\\Input\\medium.in");
-            inputFiles.Add($"{Environment.CurrentDirectory}\\Input\\big.in");
+            var inputFiles = Directory.GetFiles($"{Environment.CurrentDirectory}\\Input");
 
             foreach (var file in inputFiles)
             {
