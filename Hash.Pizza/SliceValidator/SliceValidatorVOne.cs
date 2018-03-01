@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Hash.Pizza.SliceValidator
@@ -10,18 +11,16 @@ namespace Hash.Pizza.SliceValidator
         {
             if ((xEnd-xStart+1) * (yEnd-yStart+1) > highestAmount) return false;
 
-            var uniqueIngredients = new List<char>();
+            var ingredients = new List<char>();
 
             for (int k = xStart; k <= xEnd; k++)
             {
                 for (int l = yStart; l <= yEnd; l++)
                 {
-                    var val = pizza[k, l];
 
-                    if(!uniqueIngredients.Contains(val)) 
-                        uniqueIngredients.Add(val);
+                        ingredients.Add(pizza[k, l]);
 
-                    if (uniqueIngredients.Count >= diffrentIndregients)
+                    if (ingredients.Count(x => x == 'T') >= lowestAmount && ingredients.Count(x => x == 'M') >= lowestAmount)
                         return true;
                 }
             }

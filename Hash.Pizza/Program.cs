@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Hash.Pizza.SliceValidator;
 
 namespace Hash.Pizza
@@ -91,12 +92,20 @@ namespace Hash.Pizza
             Slices = new List<int[]>();
 
             int shapeIndex = 0;
+
+            //Example
+            //var shapes = new[]
+            //{
+            //    new Shape {width = 3, height = 2},
+            //    new Shape {width = 2, height = 3},
+            //    new Shape {width = 3, height = 1},
+            //    new Shape {width = 1, height = 3},
+            //};
+
             var shapes = new[]
             {
-                new Shape {width = 3, height = 2},
-                new Shape {width = 2, height = 3},
-                new Shape {width = 3, height = 1},
-                new Shape {width = 1, height = 3},
+                new Shape {width = 7, height = 2},
+                new Shape {width = 2, height = 7}
             };
 
             int rowStep = 1;
@@ -128,10 +137,13 @@ namespace Hash.Pizza
         public void WriteResult()
         {
             var output = Slices.Count + Environment.NewLine;
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append(output);
             foreach (var slice in Slices)
-                output += $"{slice[0]} {slice[1]} {slice[2]} {slice[3]} {Environment.NewLine}";
-            Console.Write($"Result:{Environment.NewLine}{output}");
-            File.WriteAllText("output.txt", output);
+                stringBuilder.Append($"{slice[0]} {slice[1]} {slice[2]} {slice[3]} {Environment.NewLine}");
+            //Console.Write($"Result:{Environment.NewLine}{output}");
+            File.WriteAllText("output.txt", stringBuilder.ToString());
+            Console.Write("Done");
         }
     }
 }

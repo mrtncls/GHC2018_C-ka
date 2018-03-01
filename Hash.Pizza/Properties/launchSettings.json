@@ -2,7 +2,7 @@
   "profiles": {
     "Hash.Pizza": {
       "commandName": "Project",
-      "commandLineArgs": "Input/example.in"
+      "commandLineArgs": "Input/big.in"
     }
   }
 }
