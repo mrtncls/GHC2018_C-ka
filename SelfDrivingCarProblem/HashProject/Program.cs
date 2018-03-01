@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace HashProject
 {
@@ -22,6 +23,19 @@ namespace HashProject
             Console.ReadLine();
         }
 
+        class Coordinate
+        {
+            public int R { get; set; }
+            public int C { get; set; }
+        }
+
+        class Ride
+        {
+            public Coordinate From { get; set; }              
+            public Coordinate To { get; set; }
+            public int EarliestStart { get; set; }
+            public int LatestFinish { get; set; }
+        }
 
         private static void HandleInput(string input)
         {
@@ -31,6 +45,30 @@ namespace HashProject
             Console.WriteLine($"Handeling: \t {fileName}");
 
             var lines = File.ReadAllLines(input);
+
+            var firstLine = lines.First().Split(" ");
+            var i = 0;
+            var rows = int.Parse(firstLine[i++]);
+            var columns = int.Parse(firstLine[i++]);
+            var vehicles = int.Parse(firstLine[i++]);
+            var totalRides = int.Parse(firstLine[i++]);
+            var bonus = int.Parse(firstLine[i++]);
+            var steps = int.Parse(firstLine[i++]);
+
+            i = 0;
+            var rides = new List<Ride>();
+            lines = lines.Skip(1).ToArray();
+            foreach (var line in lines)
+            {
+                var splitted = line.Split(" ");
+                rides.Add(new Ride
+                {
+                    From = new Coordinate {R = int.Parse(splitted[i++]), C = int.Parse(splitted[i++])},
+                    To = new Coordinate {R = int.Parse(splitted[i++]), C = int.Parse(splitted[i++])},
+                    EarliestStart = int.Parse(splitted[i++]),
+                    LatestFinish = int.Parse(splitted[i++])
+                });
+            }
 
             WriteResult("", Path.GetFileName(fileName));
 
