@@ -8,7 +8,12 @@ namespace Tests.HashProject
         [Fact]
         public void Test1()
         {
+            var array = new int[,] {}
+            var cars = 2;
 
+            string result = string.Empty;
+
+            Assert.Equal(result, @"1 0\n2 2 1");
         }
     }
 }

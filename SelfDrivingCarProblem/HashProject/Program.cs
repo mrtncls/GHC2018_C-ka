@@ -10,9 +10,9 @@ namespace HashProject
         {
             var inputFiles = new List<string>();
             inputFiles.Add($"{Environment.CurrentDirectory}\\Input\\example.in");
-            inputFiles.Add($"{Environment.CurrentDirectory}\\Input\\small.in");
-            inputFiles.Add($"{Environment.CurrentDirectory}\\Input\\medium.in");
-            inputFiles.Add($"{Environment.CurrentDirectory}\\Input\\big.in");
+            //inputFiles.Add($"{Environment.CurrentDirectory}\\Input\\small.in");
+            //inputFiles.Add($"{Environment.CurrentDirectory}\\Input\\medium.in");
+            //inputFiles.Add($"{Environment.CurrentDirectory}\\Input\\big.in");
 
             foreach (var file in inputFiles)
             {
@@ -45,7 +45,6 @@ namespace HashProject
             File.WriteAllText($"Output\\{fileName}.out", output);
             Console.WriteLine($"Done with: \t {fileName}");
         }
-
-
     }
+    
 }
