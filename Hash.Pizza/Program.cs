@@ -74,9 +74,9 @@ namespace Hash.Pizza
 
                     var ss = Enumerable.Range(2, hCounter).Where(counter => hCounter % counter == 0 && counter <= h);
 
-                    shapes.AddRange(ss.Select(counter => new Shape { H = counter, W = (int)Math.Floor(hCounter / (float)counter) }).ToList());
+                    shapes.AddRange(ss.Select(counter => new Shape { height = counter, width = (int)Math.Floor(hCounter / (float)counter) }).ToList());
 
-                    var revsersed = shapes.Where(s => s.H != s.W).Select(s => new Shape { H = s.W, W = s.H }).ToList();
+                    var revsersed = shapes.Where(s => s.height != s.width).Select(s => new Shape { height = s.width, width = s.height }).ToList();
                     shapes.AddRange(revsersed);
 
                     return shapes.AsEnumerable();
@@ -104,13 +104,16 @@ namespace Hash.Pizza
             {
                 for (int c = 0; c < ColsMax;)
                 {
-                    if (r + shapes[shapeIndex].height < RowsMax &&
-                        c + shapes[shapeIndex].width < ColsMax &&
-                        validator.SliceIsValid(Pizza, r, r + shapes[shapeIndex].height, c,
-                            c + shapes[shapeIndex].width,
+                    var xEnd = r + shapes[shapeIndex].height - 1;
+                    var yEnd = c + shapes[shapeIndex].width - 1;
+
+                    if (xEnd < RowsMax &&
+                        c + shapes[shapeIndex].width - 1  < ColsMax &&
+                        validator.SliceIsValid(Pizza, r, xEnd, c,
+                            yEnd,
                             LowestAmount, HighestAmount, 2))
                     {
-                        Slices.Add(new[] {r, c, r + shapes[shapeIndex].height, c + shapes[shapeIndex].width});
+                        Slices.Add(new[] { r, c, xEnd, yEnd });
                         c += shapes[shapeIndex].width;
                         rowStep = shapes[shapeIndex].height;
                     }

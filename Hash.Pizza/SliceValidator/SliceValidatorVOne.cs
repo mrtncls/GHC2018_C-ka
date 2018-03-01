@@ -8,7 +8,7 @@ namespace Hash.Pizza.SliceValidator
     {
         public bool SliceIsValid(char[,] pizza, int xStart, int xEnd, int yStart, int yEnd, int lowestAmount, int highestAmount, int diffrentIndregients)
         {
-            if ((xEnd-xStart) * (yEnd-yStart) > highestAmount) return false;
+            if ((xEnd-xStart+1) * (yEnd-yStart+1) > highestAmount) return false;
 
             var uniqueIngredients = new List<char>();
 
