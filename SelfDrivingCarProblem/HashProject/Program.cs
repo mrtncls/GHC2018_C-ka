@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace HashProject
 {
@@ -33,31 +35,39 @@ namespace HashProject
             public int LatestFinish { get; set; }
         }
 
+        static int Rows;
+        static int Columns;
+        static int Vehicles;
+        static int TotalRides;
+        static int Bonus;
+        static int TotalSteps;
+        static List<Ride> Rides;
+
         private static void HandleInput(string input)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
             var fileName = Path.GetFileNameWithoutExtension(input);
             Console.WriteLine("-----------------------");
-            Console.WriteLine($"Handeling: \t {fileName}");
+            Console.WriteLine($"Handeling: \t {fileName}");           
 
             var lines = File.ReadAllLines(input);
 
             var firstLine = lines.First().Split(" ");
             var i = 0;
-            var rows = int.Parse(firstLine[i++]);
-            var columns = int.Parse(firstLine[i++]);
-            var vehicles = int.Parse(firstLine[i++]);
-            var totalRides = int.Parse(firstLine[i++]);
-            var bonus = int.Parse(firstLine[i++]);
-            var steps = int.Parse(firstLine[i++]);
+            Rows = int.Parse(firstLine[i++]);
+            Columns = int.Parse(firstLine[i++]);
+            Vehicles = int.Parse(firstLine[i++]);
+            TotalRides = int.Parse(firstLine[i++]);
+            Bonus = int.Parse(firstLine[i++]);
+            TotalSteps = int.Parse(firstLine[i++]);
 
-            i = 0;
-            var rides = new List<Ride>();
+            Rides = new List<Ride>();
             lines = lines.Skip(1).ToArray();
             foreach (var line in lines)
             {
                 var splitted = line.Split(" ");
-                rides.Add(new Ride
+                i = 0;
+                Rides.Add(new Ride
                 {
                     From = new Coordinate {R = int.Parse(splitted[i++]), C = int.Parse(splitted[i++])},
                     To = new Coordinate {R = int.Parse(splitted[i++]), C = int.Parse(splitted[i++])},
