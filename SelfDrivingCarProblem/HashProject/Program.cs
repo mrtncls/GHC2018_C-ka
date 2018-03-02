@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace HashProject
@@ -23,93 +23,43 @@ namespace HashProject
             Console.ReadLine();
         }
 
-        public class Coordinate
+        class Coordinate
         {
-            public int R
+            public int R { get; set; }
+            public int C { get; set; }
+
+            public int Distance(Coordinate coord)
             {
-                get; set;
-            }
-            public int C
-            {
-                get; set;
+                return Math.Abs(R - coord.R) + Math.Abs(C - coord.C);
             }
         }
 
-
-        public class Car
+        class Ride
         {
-            private int arrivalStep = 0;
+            public int Number { get; set; }
+            public Coordinate From { get; set; }
+            public Coordinate To { get; set; }
+            public int EarliestStart { get; set; }
+            public int LatestFinish { get; set; }
+            public int TotalSteps { get; set; }
 
-            public int currentX = 0;
-            public int currentY = 0;
-
-            private Ride currentRide = null;
-
-            public bool NeedInstructions(int step, out Ride ride)
+            public void CalcSteps()
             {
-                if (currentRide == null)
-                {
-                    ride = null;
-                    return true;
-                }
-
-                if (arrivalStep == step)
-                {
-                    ride = currentRide;
-                    currentX = currentRide.To.R;
-                    currentY = currentRide.To.C;
-                    return true;
-                }
-
-                ride = null;
-                return false;
+                TotalSteps = From.Distance(To);
             }
 
-            private void GiveAssignment(int currentTime, int toX, int toY, int toFinishX, int toFinishY)
+            public bool Possible(Coordinate coord, int step)
             {
-                var timeToDriveToStartPoint = CalcTime(currentX, currentY, toX, toY);
-                var timeToFinishFromRideStart = CalcTime(toX, toY, toFinishX, toFinishY);
-
-                arrivalStep = currentTime + timeToDriveToStartPoint + timeToFinishFromRideStart;
-            }
-
-            public void GiveAssignment(int currentTime, Ride ride)
-            {
-                currentRide = ride;
-                GiveAssignment(currentTime, ride.From.R, ride.From.C, ride.To.R, ride.To.C);
-            }
-
-            public static int CalcTime(int a, int b, int x, int y)
-            {
-                return Math.Abs(b - y) + Math.Abs(a - x);
+                return
+                    From.Distance(coord) + TotalSteps <= TotalSteps - step &&
+                    LatestFinish > step &&
+                    LatestFinish <= step;
             }
         }
 
-        public class Ride
+        class Car
         {
-            public Coordinate From
-            {
-                get; set;
-            }
-            public Coordinate To
-            {
-                get; set;
-            }
-            public int EarliestStart
-            {
-                get; set;
-            }
-            public int LatestFinish
-            {
-                get; set;
-            }
-
-            public int Id
-            {
-                get; set;
-            }
-
-            public int Travel { get; set; }
+            public List<Ride> Rides { get; set; }
         }
 
         static int Rows;
@@ -119,6 +69,7 @@ namespace HashProject
         static int Bonus;
         static int TotalSteps;
         static List<Ride> Rides;
+        static List<Car> Cars;
 
         private static void HandleInput(string input)
         {
@@ -140,100 +91,98 @@ namespace HashProject
 
             Rides = new List<Ride>();
             lines = lines.Skip(1).ToArray();
-            int id = 0;
+            var number = 0;
             foreach (var line in lines)
             {
                 var splitted = line.Split(" ");
                 i = 0;
-
-                var r = new Ride
-                {
-                    From = new Coordinate {R = int.Parse(splitted[i++]), C = int.Parse(splitted[i++])},
-                    To = new Coordinate {R = int.Parse(splitted[i++]), C = int.Parse(splitted[i++])},
-                    EarliestStart = int.Parse(splitted[i++]),
-                    LatestFinish = int.Parse(splitted[i++]),
-                    Id = id++
-                };
-
-                r.Travel = Car.CalcTime(r.From.R, r.From.C, r.To.R, r.To.C);
-
-                Rides.Add(r);
-
+                var item = new Ride();
+                item.Number = number++;
+                item.From = new Coordinate { R = int.Parse(splitted[i++]), C = int.Parse(splitted[i++]) };
+                item.To = new Coordinate { R = int.Parse(splitted[i++]), C = int.Parse(splitted[i++]) };
+                item.EarliestStart = int.Parse(splitted[i++]);
+                item.LatestFinish = int.Parse(splitted[i++]);
+                item.CalcSteps();
+                Rides.Add(item);
             }
 
-            var orderedRides = Rides.OrderBy(x => x.EarliestStart).ToList();
-
-            List<Car> cars = new List<Car>();
+            Cars = new List<Car>();
             for (int j = 0; j < Vehicles; j++)
             {
-                cars.Add(new Car());
-            }
-            
-            Dictionary<Car, List<Ride>> log = cars.ToDictionary(car => car, car => new List<Ride>());
+                var car = new Car();
+                car.Rides = new List<Ride>();
 
-            for (int currentTime = 0; currentTime < TotalSteps; currentTime++)
-            {
-                var time = currentTime;
-                orderedRides.RemoveAll(r => r.LatestFinish < time);
-                
-                foreach (var car in cars)
+                int stepsLeft = TotalSteps;
+                var currCoordinate = new Coordinate { C = 0, R = 0 };
+                while (stepsLeft > 0)
                 {
-                    if (car.NeedInstructions(currentTime, out Ride finishedRide))
+                    int currentStep = TotalSteps - stepsLeft;
+
+                    var canStartNow = Rides.Select(r =>
                     {
-                        if (finishedRide != null)
+                        int dist = currCoordinate.Distance(r.From);
+                        return new
                         {
-                            log[car].Add(finishedRide);
-                        }
+                            Distance = dist,
+                            Possible = dist + r.TotalSteps <= stepsLeft && r.EarliestStart <= currentStep && currentStep + dist + r.TotalSteps <= r.LatestFinish,
+                            Ride = r
+                        };
+                    }).Where(r => r.Possible).OrderBy(r => r.Distance);
 
-                        var temp = orderedRides.Select(x =>
+                    if (canStartNow.Any())
+                    {
+                        var ride = canStartNow.First();
+                        car.Rides.Add(ride.Ride);
+                        currCoordinate = ride.Ride.To;
+                        stepsLeft -= ride.Distance + ride.Ride.TotalSteps;
+                        Rides.Remove(ride.Ride);
+                    }
+                    else
+                    {
+                        var canStartAfterWaiting = Rides.Select(r =>
                         {
-                            var toStart = Car.CalcTime(car.currentX, car.currentY, x.From.R, x.From.C);
-                            var rideData = new
+                            int dist = currCoordinate.Distance(r.From);
+                            return new
                             {
-                                ride = x,
-                                travelToEnd = toStart + x.Travel,
-                                travelToStart = toStart,
-                                bonusPossible = time + toStart <= x.EarliestStart
+                                Distance = dist,
+                                Possible = currentStep + dist <= r.EarliestStart,
+                                Ride = r
                             };
-                            return rideData;
-                        });
+                        }).Where(r => r.Possible).OrderBy(r => r.Distance);
 
-                        var vartemp = temp
-                            .Where(x => time + x.travelToEnd <= TotalSteps)
-                            .OrderByDescending(x => x.bonusPossible)
-                            .ThenBy(x=>x.travelToStart)
-                            .ThenBy(x => x.travelToEnd)
-                            .ThenBy(x => x.ride.LatestFinish);
-
-                        var found = vartemp
-                            .FirstOrDefault();
-
-                        if (found != null)
+                        if (canStartAfterWaiting.Any())
                         {
-                            orderedRides.Remove(found.ride);
-                            car.GiveAssignment(currentTime, found.ride);
+                            var ride = canStartAfterWaiting.First();
+                            car.Rides.Add(ride.Ride);
+                            currCoordinate = ride.Ride.To;
+                            stepsLeft = TotalSteps - (ride.Ride.EarliestStart + ride.Ride.TotalSteps);
+                            Rides.Remove(ride.Ride);
+                        }
+                        else
+                        {
+                            stepsLeft = 0;
                         }
                     }
                 }
+
+                Cars.Add(car);
             }
 
-            var logBuilder = new StringBuilder();
-            foreach (var carLog in log)
+            StringBuilder sb = new StringBuilder();
+            foreach (var car in Cars)
             {
-                logBuilder.AppendLine($"{carLog.Value.Count} {string.Join(' ', carLog.Value.Select(r => r.Id))}");
+                sb.Append($"{car.Rides.Count}");
+                foreach (var ride in car.Rides)
+                    sb.Append($" {ride.Number}");
+                sb.AppendLine();
             }
 
-            WriteResult(logBuilder.ToString(), Path.GetFileName(fileName));
+            WriteResult(sb.ToString(), Path.GetFileName(fileName));
 
             watch.Stop();
             Console.WriteLine($"Time elapsed: \t {watch.ElapsedMilliseconds}");
 
             Console.WriteLine("-----------------------");
-        }
-
-        private int CalculateRide()
-        {
-            return 0;
         }
 
         private static void WriteResult(string output, string fileName)
