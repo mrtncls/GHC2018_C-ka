@@ -20,6 +20,7 @@ namespace HashProject
                 HandleInput(file);
             }
 
+            Console.WriteLine("All done. Press any key to continue.");
             Console.ReadLine();
         }
 
@@ -60,6 +61,7 @@ namespace HashProject
         class Car
         {
             public List<Ride> Rides { get; set; }
+            public int StepsWithoutRide { get; set; } = 0;
         }
 
         static int Rows;
@@ -76,7 +78,8 @@ namespace HashProject
             var watch = System.Diagnostics.Stopwatch.StartNew();
             var fileName = Path.GetFileNameWithoutExtension(input);
             Console.WriteLine("-----------------------");
-            Console.WriteLine($"Handeling: \t {fileName}");
+            Console.WriteLine($"Press any key to start solving case: \t {fileName}");
+            Console.ReadLine();
 
             var lines = File.ReadAllLines(input);
 
@@ -106,6 +109,8 @@ namespace HashProject
                 Rides.Add(item);
             }
 
+            Console.WriteLine($"Solving case with {Rides.Count} rides (total of {Rides.Sum(r => r.TotalSteps)} steps), {Vehicles} vehicles, {TotalSteps} steps ...");
+
             Cars = new List<Car>();
             for (int j = 0; j < Vehicles; j++)
             {
@@ -113,8 +118,9 @@ namespace HashProject
                 car.Rides = new List<Ride>();
 
                 int stepsLeft = TotalSteps;
+                bool done = false;
                 var currCoordinate = new Coordinate { C = 0, R = 0 };
-                while (stepsLeft > 0)
+                while (stepsLeft > 0 && !done)
                 {
                     int currentStep = TotalSteps - stepsLeft;
 
@@ -133,6 +139,7 @@ namespace HashProject
                     {
                         var ride = canStartNow.First();
                         car.Rides.Add(ride.Ride);
+                        car.StepsWithoutRide += ride.Distance;
                         currCoordinate = ride.Ride.To;
                         stepsLeft -= ride.Distance + ride.Ride.TotalSteps;
                         Rides.Remove(ride.Ride);
@@ -154,19 +161,24 @@ namespace HashProject
                         {
                             var ride = canStartAfterWaiting.First();
                             car.Rides.Add(ride.Ride);
+                            car.StepsWithoutRide += ride.Distance;
                             currCoordinate = ride.Ride.To;
                             stepsLeft = TotalSteps - (ride.Ride.EarliestStart + ride.Ride.TotalSteps);
                             Rides.Remove(ride.Ride);
                         }
                         else
                         {
-                            stepsLeft = 0;
+                            done = true;                            
                         }
                     }
                 }
 
+                Console.WriteLine($"Car {j + 1} waiting {stepsLeft} steps");
+
                 Cars.Add(car);
             }
+            
+            Console.WriteLine($"{Rides.Count} rides are unplanned. (total of {Rides.Sum(r => r.TotalSteps)} steps)");
 
             StringBuilder sb = new StringBuilder();
             foreach (var car in Cars)
